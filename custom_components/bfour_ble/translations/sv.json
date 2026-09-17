@@ -1,0 +1,22 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "confirm": {
+        "description": "Vill du lägga till {name}?"
+      },
+      "user": {
+        "description": "Välj den probe du vill lägga till.",
+        "data": {
+          "address": "Enhet"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Proben är redan tillagd",
+      "already_in_progress": "Konfigurationen pågår redan",
+      "no_devices_found": "Inga BFOUR-probes hittades. Ta proberna ur basstationen så att de vaknar och börjar annonsera.",
+      "not_supported": "Enheten är inte en BFOUR-probe"
+    }
+  }
+}
