@@ -25,45 +25,7 @@ Per probe:
 | Kärntemperatur | sensor | Sensorn i spetsen |
 | Omgivningstemperatur | sensor | Sensorn vid handtaget |
 | Batterispänning | sensor | Diagnostik |
-| Måltemperatur | number | Din måltemp, 40–100 °C |
-| Förvarning | number | Grader innan målet, default 10 |
-| Måltemp nådd | binary_sensor | Latchat larm |
-| Snart klar | binary_sensor | Förvarning |
 | Aktiv | binary_sensor | Statusflagga, se nedan |
-| Återställ larm | button | Nollställer latcharna |
-
-### Måltemperatur
-
-Måltemperaturen lagras i Home Assistant och skrivs **inte** till proben eller
-basstationen — integrationen läser bara annonseringar och kan inte skriva.
-Basstationens eget larm är alltså oberoende och kan stå på ett annat värde.
-
-Larmet är latchat: `Måltemp nådd` går `on` när kärntemperaturen passerar målet
-och ligger kvar även om temperaturen dippar tillbaka. Det nollställs när
-
-- proben slutar annonsera i mer än fem minuter (den lades i basstationen),
-- måltemperaturen ändras, eller
-- du trycker på `Återställ larm`.
-
-En enda automation räcker då för alla probes:
-
-```yaml
-alias: Grill - probe nådd måltemp
-triggers:
-  - trigger: state
-    entity_id:
-      - binary_sensor.bfour_probe_ce_maltemp_nadd
-      - binary_sensor.bfour_probe_d5_maltemp_nadd
-    to: "on"
-actions:
-  - action: script.meddela_daniel
-    data:
-      meddelande: >
-        {{ trigger.to_state.name }} —
-        {{ state_attr(trigger.entity_id, 'friendly_name') }}
-mode: queued
-max: 2
-```
 
 ## Protokoll
 
@@ -113,12 +75,13 @@ har mätt upp än.
 
 ```
 python3 tests/test_parser.py
-python3 tests/test_runtime.py
 ```
 
 Parsertesterna kör mot verkliga paket från en BF-80, verifierade mot både
-displayen och tillverkarens app. Runtime-testerna täcker latchlogiken, inklusive
-att en kort lucka i BLE-täckningen inte nollställer ett pågående larm.
+displayen och tillverkarens app. 
+Måltemperaturer, förvarningar och hålltid ligger i en separat integration,
+[ha-cooking](https://github.com/danielholm/ha-cooking), som fungerar på vilken
+temperatursensor som helst.
 
 ## Tack
 

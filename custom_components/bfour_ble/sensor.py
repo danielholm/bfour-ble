@@ -91,7 +91,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Koppla in sensorerna."""
-    coordinator = entry.runtime_data.coordinator
+    coordinator = entry.runtime_data
     processor = PassiveBluetoothDataProcessor(sensor_update_to_bluetooth_data_update)
     entry.async_on_unload(
         processor.async_add_entities_listener(BFourSensor, async_add_entities)

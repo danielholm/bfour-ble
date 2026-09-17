@@ -16,31 +16,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
-from homeassistant.helpers.device_registry import CONNECTION_BLUETOOTH, DeviceInfo
 
-from .parser import MANUFACTURER_ID, ProbeData, parse, short_id
-from .runtime import BFourRuntime
+from .parser import MANUFACTURER_ID, ProbeData, parse
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS: list[Platform] = [
-    Platform.BINARY_SENSOR,
-    Platform.BUTTON,
-    Platform.NUMBER,
-    Platform.SENSOR,
-]
+PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
 BFourConfigEntry = ConfigEntry
-
-
-def probe_device_info(address: str) -> DeviceInfo:
-    """Gemensam enhetsinfo sa alla entiteter hamnar pa samma probe."""
-    return DeviceInfo(
-        connections={(CONNECTION_BLUETOOTH, address)},
-        manufacturer="BFOUR",
-        model="BF-70/BF-80 probe",
-        name=f"BFOUR Probe {short_id(address)}",
-    )
 
 
 def _build_update_method(
@@ -70,7 +53,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: BFourConfigEntry) -> boo
         mode=BluetoothScanningMode.PASSIVE,
         update_method=_build_update_method(address),
     )
-    entry.runtime_data = BFourRuntime(coordinator=coordinator, address=address)
+    entry.runtime_data = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     # async_start returnerar en callback som avregistrerar lyssnaren.

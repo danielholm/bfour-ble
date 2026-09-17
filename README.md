@@ -1,11 +1,5 @@
 # BFOUR BLE
 
-[![Tests](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml)
-[![Validate](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml)
-[![License](https://img.shields.io/github/license/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/issues)
-
 Home Assistant integration for BFOUR wireless meat thermometers (BF-70, BF-80).
 
 The probes are read **passively** from their advertisements. No connection, no
@@ -24,11 +18,6 @@ Home Assistant.
 Take the probes out of the base station so they wake up. They should appear as
 discovered devices within a minute or so. One config entry per probe.
 
-[![Add integration][add-integration-shield]][add-integration]
-
-[add-integration-shield]: https://my.home-assistant.io/badges/hacs_repository.svg
-[add-integration]: https://my.home-assistant.io/redirect/hacs_repository/?owner=danielholm&repository=bfour-ble&category=integration
-
 ## Entities
 
 Per probe:
@@ -38,46 +27,7 @@ Per probe:
 | Core temperature | sensor | The sensor in the tip |
 | Ambient temperature | sensor | The sensor near the handle |
 | Battery voltage | sensor | Diagnostic |
-| Target temperature | number | Your target, 40–100 °C |
-| Pre-warning | number | Degrees before the target, default 10 |
-| Target reached | binary_sensor | Latched alarm |
-| Almost done | binary_sensor | Pre-warning |
 | Active | binary_sensor | Status flag, see below |
-| Reset alarm | button | Clears the latches |
-
-### Target temperature
-
-The target is stored in Home Assistant and is **not** written to the probe or
-the base station — this integration only reads advertisements and cannot write.
-The base station's own alarm is therefore independent and may sit at a
-different value.
-
-The alarm is latched: `Target reached` turns `on` when the core temperature
-passes the target and stays on even if the temperature dips back down. It
-resets when
-
-- the probe stops advertising for more than five minutes (it was put back in
-  the base station),
-- the target temperature is changed, or
-- you press `Reset alarm`.
-
-A single automation then covers every probe:
-
-```yaml
-alias: Grill - probe reached target
-triggers:
-  - trigger: state
-    entity_id:
-      - binary_sensor.bfour_probe_ce_target_reached
-      - binary_sensor.bfour_probe_d5_target_reached
-    to: "on"
-actions:
-  - action: notify.mobile_app_phone
-    data:
-      message: "{{ trigger.to_state.name }}"
-mode: queued
-max: 2
-```
 
 ## Protocol
 
@@ -128,13 +78,14 @@ yet.
 
 ```
 python3 tests/test_parser.py
-python3 tests/test_runtime.py
 ```
 
 The parser tests run against real packets captured from a BF-80, verified
-against both the base station display and the manufacturer's app. The runtime
-tests cover the latching logic, including that a brief gap in BLE coverage does
-not reset an alarm mid-cook.
+against both the base station display and the manufacturer's app.
+
+Target temperatures, pre-warnings and hold-time tracking live in a separate
+integration, [ha-cooking](https://github.com/danielholm/ha-cooking), which
+works on any temperature sensor rather than just these probes.
 
 ## Acknowledgements
 
