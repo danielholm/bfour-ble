@@ -1,5 +1,11 @@
 # BFOUR BLE
 
+[![Tests](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml)
+[![Validate](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml)
+[![License](https://img.shields.io/github/license/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/issues)
+
 Home Assistant integration for BFOUR wireless meat thermometers (BF-70, BF-80).
 
 The probes are read **passively** from their advertisements. No connection, no
@@ -17,6 +23,11 @@ Home Assistant.
 
 Take the probes out of the base station so they wake up. They should appear as
 discovered devices within a minute or so. One config entry per probe.
+
+[![Add integration][add-integration-shield]][add-integration]
+
+[add-integration-shield]: https://my.home-assistant.io/badges/hacs_repository.svg
+[add-integration]: https://my.home-assistant.io/redirect/hacs_repository/?owner=danielholm&repository=bfour-ble&category=integration
 
 ## Entities
 
