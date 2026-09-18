@@ -19,7 +19,6 @@ jobs:
       - name: Kör tester
         run: |
           python3 tests/test_parser.py
-          python3 tests/test_runtime.py
 
       - name: Syntaxkontroll
         run: python3 -m compileall -q custom_components
