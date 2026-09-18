@@ -1,6 +1,5 @@
 # BFOUR BLE
 
-[![Add integration](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=danielholm&repository=bfour-ble&category=integration)
 [![Tests](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/tests.yml)
 [![Validate](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml/badge.svg)](https://github.com/danielholm/bfour-ble/actions/workflows/validate.yml)
 [![License](https://img.shields.io/github/license/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/blob/main/LICENSE)
@@ -18,6 +17,8 @@ base station can be used alongside it, or left in a drawer.
 [Svenska](README.sv.md)
 
 ## Installation
+
+[![Add integration](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=danielholm&repository=bfour-ble&category=integration)
 
 Add this repository as a custom repository in HACS, or copy
 `custom_components/bfour_ble/` into your `config/custom_components/`. Restart
