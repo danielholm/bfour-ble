@@ -6,6 +6,7 @@
 [![Release](https://img.shields.io/github/v/release/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/releases)
 [![Stars](https://img.shields.io/github/stars/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/stargazers)
 [![Issues](https://img.shields.io/github/issues/danielholm/bfour-ble)](https://github.com/danielholm/bfour-ble/issues)
+[![Downloads](https://img.shields.io/github/downloads/danielholm/bfour-ble/total)](https://github.com/danielholm/bfour-ble/releases)
 
 Home Assistant integration for BFOUR wireless meat thermometers (BF-70, BF-80).
 
